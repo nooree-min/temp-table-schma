@@ -1,0 +1,335 @@
+{
+  "tables": {
+    "users": {
+      "name": "users",
+      "comment": null,
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "VARCHAR(50)",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "VARCHAR(100)",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "DATETIME",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "constraints": {}
+    },
+    "posts": {
+      "name": "posts",
+      "comment": null,
+      "columns": {
+        "post_id": {
+          "name": "post_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "VARCHAR(255)",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "TEXT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "DATETIME",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "constraints": {}
+    },
+    "comments": {
+      "name": "comments",
+      "comment": null,
+      "columns": {
+        "comment_id": {
+          "name": "comment_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "TEXT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "DATETIME",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "constraints": {}
+    },
+    "likes": {
+      "name": "likes",
+      "comment": null,
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "liked_at": {
+          "name": "liked_at",
+          "type": "DATETIME",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "constraints": {}
+    },
+    "tags": {
+      "name": "tags",
+      "comment": null,
+      "columns": {
+        "tag_id": {
+          "name": "tag_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "tag_name": {
+          "name": "tag_name",
+          "type": "VARCHAR(50)",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "constraints": {}
+    },
+    "post_tags": {
+      "name": "post_tags",
+      "comment": null,
+      "columns": {
+        "post_id": {
+          "name": "post_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        },
+        "tag_id": {
+          "name": "tag_id",
+          "type": "INT",
+          "default": null,
+          "check": null,
+          "comment": null,
+          "primary": false,
+          "unique": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "constraints": {}
+    }
+  },
+  "relationships": {
+    "users_user_id_to_posts_user_id": {
+      "name": "users_user_id_to_posts_user_id",
+      "primaryTableName": "users",
+      "primaryColumnName": "user_id",
+      "foreignTableName": "posts",
+      "foreignColumnName": "user_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    },
+    "users_user_id_to_comments_user_id": {
+      "name": "users_user_id_to_comments_user_id",
+      "primaryTableName": "users",
+      "primaryColumnName": "user_id",
+      "foreignTableName": "comments",
+      "foreignColumnName": "user_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    },
+    "posts_post_id_to_comments_post_id": {
+      "name": "posts_post_id_to_comments_post_id",
+      "primaryTableName": "posts",
+      "primaryColumnName": "post_id",
+      "foreignTableName": "comments",
+      "foreignColumnName": "post_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    },
+    "users_user_id_to_likes_user_id": {
+      "name": "users_user_id_to_likes_user_id",
+      "primaryTableName": "users",
+      "primaryColumnName": "user_id",
+      "foreignTableName": "likes",
+      "foreignColumnName": "user_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    },
+    "posts_post_id_to_likes_post_id": {
+      "name": "posts_post_id_to_likes_post_id",
+      "primaryTableName": "posts",
+      "primaryColumnName": "post_id",
+      "foreignTableName": "likes",
+      "foreignColumnName": "post_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    },
+    "posts_post_id_to_post_tags_post_id": {
+      "name": "posts_post_id_to_post_tags_post_id",
+      "primaryTableName": "posts",
+      "primaryColumnName": "post_id",
+      "foreignTableName": "post_tags",
+      "foreignColumnName": "post_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    },
+    "tags_tag_id_to_post_tags_tag_id": {
+      "name": "tags_tag_id_to_post_tags_tag_id",
+      "primaryTableName": "tags",
+      "primaryColumnName": "tag_id",
+      "foreignTableName": "post_tags",
+      "foreignColumnName": "tag_id",
+      "cardinality": "ONE_TO_MANY",
+      "updateConstraint": "NO_ACTION",
+      "deleteConstraint": "NO_ACTION"
+    }
+  },
+  "tableGroups": {}
+}
