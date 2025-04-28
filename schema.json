@@ -1,0 +1,284 @@
+{
+  "tables": [
+    {
+      "name": "users",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "username",
+          "type": "VARCHAR(50)",
+          "nullable": false
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        }
+      ],
+      "indexes": [],
+      "constraints": [],
+      "triggers": [],
+      "labels": [],
+      "referenced_tables": []
+    },
+    {
+      "name": "posts",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "post_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(255)",
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        }
+      ],
+      "constraints": [],
+      "indexes": [],
+      "triggers": [],
+      "labels": [],
+      "referenced_tables": [
+        "users"
+      ]
+    },
+    {
+      "name": "comments",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "comment_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "post_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": true
+        }
+      ],
+      "constraints": [],
+      "indexes": [],
+      "triggers": [],
+      "labels": [],
+      "referenced_tables": [
+        "posts",
+        "users"
+      ]
+    },
+    {
+      "name": "likes",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "post_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "liked_at",
+          "type": "DATETIME",
+          "nullable": true
+        }
+      ],
+      "constraints": [],
+      "indexes": [],
+      "triggers": [],
+      "labels": [],
+      "referenced_tables": [
+        "users",
+        "posts"
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "tag_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "tag_name",
+          "type": "VARCHAR(50)",
+          "nullable": false
+        }
+      ],
+      "constraints": [],
+      "indexes": [],
+      "triggers": [],
+      "labels": [],
+      "referenced_tables": []
+    },
+    {
+      "name": "post_tags",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "post_id",
+          "type": "INT",
+          "nullable": false
+        },
+        {
+          "name": "tag_id",
+          "type": "INT",
+          "nullable": false
+        }
+      ],
+      "constraints": [],
+      "indexes": [],
+      "triggers": [],
+      "labels": [],
+      "referenced_tables": [
+        "posts",
+        "tags"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "table": "posts",
+      "columns": [
+        "user_id"
+      ],
+      "parent_table": "users",
+      "parent_columns": [
+        "user_id"
+      ],
+      "def": "FOREIGN KEY (user_id) REFERENCES users(user_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    },
+    {
+      "table": "comments",
+      "columns": [
+        "user_id"
+      ],
+      "parent_table": "users",
+      "parent_columns": [
+        "user_id"
+      ],
+      "def": "FOREIGN KEY (user_id) REFERENCES users(user_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    },
+    {
+      "table": "comments",
+      "columns": [
+        "post_id"
+      ],
+      "parent_table": "posts",
+      "parent_columns": [
+        "post_id"
+      ],
+      "def": "FOREIGN KEY (post_id) REFERENCES posts(post_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    },
+    {
+      "table": "likes",
+      "columns": [
+        "user_id"
+      ],
+      "parent_table": "users",
+      "parent_columns": [
+        "user_id"
+      ],
+      "def": "FOREIGN KEY (user_id) REFERENCES users(user_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    },
+    {
+      "table": "likes",
+      "columns": [
+        "post_id"
+      ],
+      "parent_table": "posts",
+      "parent_columns": [
+        "post_id"
+      ],
+      "def": "FOREIGN KEY (post_id) REFERENCES posts(post_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    },
+    {
+      "table": "post_tags",
+      "columns": [
+        "post_id"
+      ],
+      "parent_table": "posts",
+      "parent_columns": [
+        "post_id"
+      ],
+      "def": "FOREIGN KEY (post_id) REFERENCES posts(post_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    },
+    {
+      "table": "post_tags",
+      "columns": [
+        "tag_id"
+      ],
+      "parent_table": "tags",
+      "parent_columns": [
+        "tag_id"
+      ],
+      "def": "FOREIGN KEY (tag_id) REFERENCES tags(tag_id)",
+      "cardinality": "exactly_one",
+      "parent_cardinality": "one_or_more"
+    }
+  ],
+  "functions": [],
+  "enums": [],
+  "driver": {
+    "name": "mysql"
+  }
+}
