@@ -6,10 +6,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "exports": {
-    ".": "./dist/index.js",
-    "./parser": "./dist/parser.js"
-  },
+"exports": {
+  ".": "./src/index.ts",
+  "./parser": "./src/parser/index.ts"
+},
   "dependencies": {
     "@prisma/internals": "6.6.0",
     "@ruby/prism": "1.4.0",

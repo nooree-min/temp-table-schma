@@ -1,19 +1,39 @@
-import path from 'node:path'
-import type { PageProps } from '@/app/types'
-import {
-  type SupportedFormat,
-  detectFormat,
-  parse,
-  setPrismWasmUrl,
-  supportedFormatSchema,
-} from '@liam-hq/db-structure/parser'
-import * as Sentry from '@sentry/nextjs'
-import { load } from 'cheerio'
-import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
-import { notFound } from 'next/navigation'
-import * as v from 'valibot'
-import ERDViewer from './erdViewer'
+const supportedFormatSchema = v.union([
+  v.literal('postgres'),
+  v.literal('mysql'),
+  v.literal('sqlite'),
+  v.literal('mariadb'),
+  v.literal('tsv'),
+  v.literal('json'),
+  v.literal('json5'),
+  v.literal('ruby'),
+  v.literal('markdown'),
+  v.literal('xml'),
+])
+
+function detectFormat(url: string): SupportedFormat | undefined {
+  if (url.endsWith('.sql')) return 'postgres'
+  if (url.endsWith('.rb')) return 'ruby'
+  if (url.endsWith('.json') || url.endsWith('.json5')) return 'json'
+  if (url.endsWith('.tsv')) return 'tsv'
+  if (url.endsWith('.xml')) return 'xml'
+  if (url.endsWith('.md')) return 'markdown'
+  return undefined
+}
+
+async function parse(input: string, format: SupportedFormat): Promise<{ value: any, errors: Error[] }> {
+  try {
+    // 최소 예시: 실제 구조에 따라 수정 필요
+    const schema = JSON.parse(input)
+    return { value: schema, errors: [] }
+  } catch (err) {
+    return {
+      value: undefined,
+      errors: [err instanceof Error ? err : new Error('Unknown parse error')],
+    }
+  }
+}
+
 
 const paramsSchema = v.object({
   slug: v.array(v.string()),
@@ -21,6 +41,22 @@ const paramsSchema = v.object({
 const searchParamsSchema = v.object({
   format: v.optional(supportedFormatSchema),
 })
+
+
+import path from 'node:path'
+import type { PageProps } from '@/app/types'
+import {
+  type SupportedFormat,
+  setPrismWasmUrl
+} from '@liam-hq/db-structure/parser'
+
+import * as Sentry from '@sentry/nextjs'
+import { load } from 'cheerio'
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
+import * as v from 'valibot'
+import ERDViewer from './erdViewer'
 
 const resolveContentUrl = (url: string): string | undefined => {
   try {
@@ -161,7 +197,7 @@ export default async function Page({
 
   const input = await res.text()
 
-  setPrismWasmUrl(path.resolve(process.cwd(), 'prism.wasm'))
+  // setPrismWasmUrl(path.resolve(process.cwd(), 'prism.wasm'))
 
   let format: SupportedFormat | undefined
   const searchParams = await _searchParams
@@ -190,7 +226,24 @@ export default async function Page({
     )
   }
 
-  const { value: schema, errors } = await parse(input, format)
+  const result = await parse(input, format)
+  const schema = result?.value
+  const errors = result?.errors ?? []
+  
+  if (!schema) {
+    return (
+      <ERDViewer
+        schema={blankSchema}
+        defaultSidebarOpen={false}
+        errorObjects={[
+          {
+            name: 'ParseError',
+            message: '스키마를 분석할 수 없습니다. 파일이 비어 있거나 잘못되었을 수 있습니다.',
+          },
+        ]}
+      />
+    )
+  }
   for (const error of errors) {
     Sentry.captureException(error)
   }
